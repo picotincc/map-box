@@ -97,7 +97,7 @@ export default class View extends ManagedObject
         }
         this.addAggregation("subviews", subview);
         subview.placeAt($container);
-        this.fireAddedToParent();
+        subview.fireAddedToParent();
         return this;
     }
 

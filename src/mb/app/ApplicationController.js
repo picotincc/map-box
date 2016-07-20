@@ -11,6 +11,6 @@ export default class ApplicationController extends AdaptiveApplicationController
 
     run()
     {
-        console.log("dsadas");
+
     }
 }
