@@ -4,9 +4,9 @@ import MapView from "../map/MapView";
 
 export default class Application extends AdaptiveApplication
 {
-    init()
+    afterInit()
     {
-        super.init();
+        super.afterInit();
         this.addStyleClass("mb-app");
         this._initMapView();
     }
