@@ -1,6 +1,6 @@
 import Layer from "sap/a/map/layer/Layer";
 
-export default class ExampleLayer extends Layer
+export default class NaviLayer extends Layer
 {
     metadata = {
         properties: {
@@ -21,39 +21,36 @@ export default class ExampleLayer extends Layer
     afterInit()
     {
         super.afterInit();
-        // const line = L.polyline(locations);
-        // this.container.addLayer(line);
     }
 
-    setStartLocation(location)
+    setStartLocation(value)
     {
-        const loc = L.latLng(location);
-        this.setProperty("startLocation", loc);
+        this.setProperty("startLocation", L.latLng(value));
         this._updateStartMarker();
     }
 
-    setEndLocation(location)
+    setEndLocation(value)
     {
-        const loc = L.latLng(location);
-        this.setProperty("endLocation", loc);
+        this.setProperty("endLocation", L.latLng(value));
         this._updateEndMarker();
     }
 
-    drawRoute()
+    drawRoute(steps)
     {
         this.routeGroup.clearLayers();
-        const latlngs = [ this.getStartLocation(), this.getEndLocation() ];
-        const line = L.polyline(latlngs);
-        this.routeGroup.addLayer(line);;
+        const paths = steps.map(step => {
+            return step.path;
+        });
+        const mPolyline = L.multiPolyline(paths);
+        this.routeGroup.addLayer(mPolyline);
     }
-
 
     _updateStartMarker()
     {
         if (!this.startMarker)
         {
             this.startMarker = L.circleMarker(this.getStartLocation());
-            this.startMarker.setRadius(8);
+            this.startMarker.setRadius(10);
             this.startMarker.setStyle({
                 color: "green",
                 opacity: 0.8,
@@ -66,16 +63,14 @@ export default class ExampleLayer extends Layer
         {
             this.startMarker.setLatLng(this.getStartLocation());
         }
-
     }
-
 
     _updateEndMarker()
     {
         if (!this.endMarker)
         {
             this.endMarker = L.circleMarker(this.getEndLocation());
-            this.endMarker.setRadius(8);
+            this.endMarker.setRadius(10);
             this.endMarker.setStyle({
                 color: "red",
                 opacity: 0.8,
@@ -88,10 +83,5 @@ export default class ExampleLayer extends Layer
         {
             this.endMarker.setLatLng(this.getEndLocation());
         }
-
     }
-
-
-
-
 }

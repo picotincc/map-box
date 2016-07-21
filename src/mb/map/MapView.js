@@ -1,7 +1,9 @@
 import AdaptiveMapView from "sap/a/map/MapView";
 import TileLayer from "sap/a/map/layer/TileLayer";
 
-import ExampleLayer from "./layer/ExampleLayer";
+import ServiceClient from "gd/service/ServiceClient";
+
+import NaviLayer from "./layer/NaviLayer";
 
 export default class MapView extends AdaptiveMapView
 {
@@ -18,12 +20,26 @@ export default class MapView extends AdaptiveMapView
         });
         this.addLayer(this.tileLayer);
 
-        this.exampleLayer = new ExampleLayer({
+        this.naviLayer = new NaviLayer({
             startLocation: [ 31.9790247, 118.7548084 ],
             endLocation: [ 32.04389, 118.77881 ]
         });
-        this.addLayer(this.exampleLayer);
-        this.exampleLayer.drawRoute();
-        this.exampleLayer.fitBounds();
+        this.addLayer(this.naviLayer);
+        this.naviLayer.fitBounds();
+
     }
+
+    searchRoute(startLocation, endLocation)
+    {
+        this.naviLayer.applySettings({
+            startLocation,
+            endLocation
+        });
+
+        ServiceClient.getInstance().searchDrivingRoute([ startLocation, endLocation ]).then((result) => {
+            this.naviLayer.drawRoute(result.steps);
+            this.naviLayer.fitBounds();
+        });
+    }
+
 }
