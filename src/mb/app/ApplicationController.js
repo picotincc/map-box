@@ -20,7 +20,7 @@ export default class ApplicationController extends AdaptiveApplicationController
             console.log(ServiceClient.getInstance().driving);
 
             //search route between two locations
-            //this.view.mapView.searchRoute([ 31.9790247, 118.7548084 ], [ 32.04389, 118.77881 ]);
+            this.view.mapView.searchRoute([ 31.9790247, 118.7548084 ], [ 32.04389, 118.77881 ]);
         });
     }
 }

@@ -1,6 +1,8 @@
 import AdaptiveMapView from "sap/a/map/MapView";
 import TileLayer from "sap/a/map/layer/TileLayer";
 
+import ServiceClient from "gd/service/ServiceClient";
+
 import NaviLayer from "./layer/NaviLayer";
 
 export default class MapView extends AdaptiveMapView
@@ -37,10 +39,16 @@ export default class MapView extends AdaptiveMapView
 
     searchRoute(startLocation, endLocation)
     {
-        // this.exampleLayer.applySettings({
-        //         startLocation,
-        //         endLocation
-        // });
+        this.naviLayer.applySettings({
+            startLocation,
+            endLocation
+        });
+
+        ServiceClient.getInstance().searchDrivingRoute([ startLocation, endLocation ]).then((result) => {
+            this.naviLayer.drawRoute(result.steps);
+        });
+
+
         // driving.search(change84ToHuoxing(startLocation), change84ToHuoxing(endLocation), (status, result) => {
         //     //TODO 解析返回结果，自己生成操作界面和地图展示界面
         //     if (status === "complete" && result.info === "OK")
@@ -59,24 +67,6 @@ export default class MapView extends AdaptiveMapView
         // });
 
 
-        //console.log(change84ToHuoxing(startLocation));
-        return new Promise((resolve, reject) => {
-            this.exampleLayer.applySettings({
-                startLocation,
-                endLocation
-            });
-            //async
-            driving.search(change84ToHuoxing(startLocation), change84ToHuoxing(endLocation), (status, result) => {
-                //TODO 解析返回结果，自己生成操作界面和地图展示界面
-                if (status === "complete" && result.info === "OK")
-                {
-                    this.exampleLayer.drawRoute(result.routes[0]);
-                    this.exampleLayer.fitBounds();
-                }
-            });
-            // this.exampleLayer.drawRoute(geojson);
-            // this.exampleLayer.fitBounds();
-        });
 
     }
 
