@@ -14,7 +14,7 @@ export default class Application extends AdaptiveApplication
     _initMapView()
     {
         this.mapView = new MapView("map-view", {
-            defaultZoom: 10
+            
         });
         this.addSubview(this.mapView);
     }
