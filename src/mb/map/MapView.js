@@ -7,10 +7,21 @@ import NaviLayer from "./layer/NaviLayer";
 
 export default class MapView extends AdaptiveMapView
 {
+    metadata = {
+        events: {
+            mapclick: { location: { type: "any" } }
+        }
+    };
+    init()
+    {
+        super.init();
+    }
+
     afterInit()
     {
         super.afterInit();
         this.addStyleClass("mb-map-view");
+        this.map.on("click",this._map_click.bind(this));
     }
 
     initLayers()
@@ -26,6 +37,8 @@ export default class MapView extends AdaptiveMapView
         });
         this.addLayer(this.naviLayer);
         this.naviLayer.fitBounds();
+
+
 
     }
 
@@ -47,6 +60,16 @@ export default class MapView extends AdaptiveMapView
     {
         ServiceClient.getInstance().searchPoiAutocomplete(keyword).then((result) => {
             console.log(result);
+        });
+    }
+
+    _map_click(e)
+    {
+
+        console.log(e.latlng);
+
+        this.fireMapclick({
+            location: e.latlng
         });
     }
 
