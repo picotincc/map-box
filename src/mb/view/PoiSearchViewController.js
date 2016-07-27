@@ -36,6 +36,7 @@ export default class PoiSearchViewController extends ViewController
     {
         ServiceClient.getInstance().searchPoiAutocomplete(e.getParameters().keyword).then(result => {
             if (result.length > 0) {
+                console.log(result);
                 const poi = result[0];
                 this.view.setPoi(poi);
 

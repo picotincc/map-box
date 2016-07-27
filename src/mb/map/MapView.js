@@ -12,6 +12,7 @@ export default class MapView extends AdaptiveMapView
             mapclick: { location: { type: "any" } }
         }
     };
+
     init()
     {
         super.init();
@@ -31,12 +32,12 @@ export default class MapView extends AdaptiveMapView
         });
         this.addLayer(this.tileLayer);
 
-        this.naviLayer = new NaviLayer({
-            startLocation: [ 31.9790247, 118.7548084 ],
-            endLocation: [ 32.04389, 118.77881 ]
-        });
-        this.addLayer(this.naviLayer);
-        this.naviLayer.fitBounds();
+        // this.naviLayer = new NaviLayer({
+        //     startLocation: [ 31.9790247, 118.7548084 ],
+        //     endLocation: [ 32.04389, 118.77881 ]
+        // });
+        // this.addLayer(this.naviLayer);
+        // this.naviLayer.fitBounds();
 
 
 
@@ -63,11 +64,29 @@ export default class MapView extends AdaptiveMapView
         });
     }
 
+    updateSelectedMaker(selectedPoi)
+    {
+        console.log(selectedPoi);
+        var latlng = L.latLng(selectedPoi.location.lat, selectedPoi.location.lng);
+        if (!this.selectedMarker)
+        {
+            this.selectedMarker = L.circleMarker(latlng);
+            this.selectedMarker.setRadius(8);
+            this.selectedMarker.setStyle({
+                color: "blue",
+                opacity: 0.8,
+                fillColor: "blue",
+                fillOpacity: 0.8
+            });
+            this.map.addLayer(this.selectedMarker);
+        }
+        else {
+            this.selectedMarker.setLatLng(latlng);
+        }
+    }
+
     _map_click(e)
     {
-
-        console.log(e.latlng);
-
         this.fireMapclick({
             location: e.latlng
         });

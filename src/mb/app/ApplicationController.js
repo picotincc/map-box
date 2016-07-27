@@ -55,14 +55,13 @@ export default class ApplicationController extends AdaptiveApplicationController
 
     _selectedPoi_changed(e)
     {
-        console.log(sap.ui.getCore().getModel().getProperty("/selectedPoi"));
         const selectedPoi = sap.ui.getCore().getModel().getProperty("/selectedPoi");
         this.view.mapView.setCenterLocation(selectedPoi.location, 12);
+        this.view.mapView.updateSelectedMaker(selectedPoi);
     }
 
     _queryPoi_changed(e)
     {
-        console.log(sap.ui.getCore().getModel().getProperty("/queryPoi"));
         const queryPoi = sap.ui.getCore().getModel().getProperty("/queryPoi");
         this.view.poiSearchView.setKeyword(queryPoi.formattedAddress);
     }
@@ -72,7 +71,6 @@ export default class ApplicationController extends AdaptiveApplicationController
         ServiceClient.getInstance().searchAddress(e.getParameters().location).then(result => {
             //改变全局model
             sap.ui.getCore().getModel().setProperty("/queryPoi", result);
-            console.log(result);
         });
     }
 }
