@@ -35,10 +35,18 @@ export default class MapView extends AdaptiveMapView
             startLocation,
             endLocation
         });
+        this.naviLayer.fitBounds();
 
         ServiceClient.getInstance().searchDrivingRoute([ startLocation, endLocation ]).then((result) => {
             this.naviLayer.drawRoute(result.steps);
             this.naviLayer.fitBounds();
+        });
+    }
+
+    searchPoi(keyword)
+    {
+        ServiceClient.getInstance().searchPoiAutocomplete(keyword).then((result) => {
+            console.log(result);
         });
     }
 

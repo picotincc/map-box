@@ -13,6 +13,7 @@ export default class ApplicationController extends AdaptiveApplicationController
 
     run()
     {
+        console.log("ApplicationController is running.");
         ServiceClient.getInstance().attachReady(() => {
 
             //gaode service started
@@ -21,6 +22,7 @@ export default class ApplicationController extends AdaptiveApplicationController
 
             //search route between two locations
             this.view.mapView.searchRoute([ 31.9790247, 118.7548084 ], [ 32.04389, 118.77881 ]);
+            // this.view.mapView.searchPoi("丰盛");
         });
     }
 }
