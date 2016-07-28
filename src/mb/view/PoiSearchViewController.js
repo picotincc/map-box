@@ -24,12 +24,15 @@ export default class PoiSearchViewController extends ViewController
         super.initView();
         this.view.attachInput(this._oninput.bind(this));
         this.view.attachSearch(this._onSearch.bind(this));
+        this.view.attachFocus(this._onfocus.bind(this));
+        this.view.attachBlur(this._onblur.bind(this));
     }
 
     _oninput(e)
     {
         ServiceClient.getInstance().searchPoiAutocomplete(e.getParameters().keyword).then(result => {
-            //console.log(result);
+            this.view.suggestionListView.setItems(result);
+            this.view.suggestionListView.toggleSuggestion(result && result.length > 0);
         }, (reason) => {
             console.error(reason);
         });
@@ -46,5 +49,15 @@ export default class PoiSearchViewController extends ViewController
         }, (reason) => {
             console.error(reason);
         });
+    }
+
+    _onfocus(e)
+    {
+        this.view.suggestionListView.toggleSuggestion(this.view.suggestionListView.getItems() && this.view.suggestionListView.getItems().length > 0);
+    }
+
+    _onblur(e)
+    {
+        this.view.suggestionListView.hideSuggestion();
     }
 }

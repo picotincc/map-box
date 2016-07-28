@@ -1,5 +1,7 @@
 import View from "sap/a/view/View";
 
+import SuggestionListView from "./SuggestionListView";
+
 export default class PoiSearchView extends View
 {
     metadata = {
@@ -8,7 +10,9 @@ export default class PoiSearchView extends View
         },
         events: {
             input: { parameters: {keyword: { type: "string" } } },
-            search: { parameters: {keyword: { type: "string" } } }
+            search: { parameters: {keyword: { type: "string" } } },
+            focus: {},
+            blur: {}
         }
     };
 
@@ -17,19 +21,30 @@ export default class PoiSearchView extends View
         super.init();
         this.addStyleClass("mb-search-view");
 
-        this.$element.append(`<span class="icon"/>`);
         this.$input = $(`<input type=search placeholder="搜索">`);
         this.$element.append(this.$input);
 
-        this.inputDelay = null;
+        this.$element.append(`<span class="icon iconfont icon-search"/>`);
 
+        this.inputDelay = null;
         this.$input.on("input",this._oninput.bind(this));
         this.$element.on("keydown", this._keydown.bind(this));
+
+        this._initSuggestionListView();
+
+        this.$input.on("focus", () => {
+            this.fireFocus();
+        });
+        this.$input.on("blur", () => {
+            this.fireBlur();
+        });
     }
 
-    afterInit()
+    _initSuggestionListView()
     {
-        super.afterInit();
+        this.suggestionListView = new SuggestionListView();
+        this.addSubview(this.suggestionListView);
+        this.suggestionListView.hideSuggestion();
     }
 
     setPoi(value)
