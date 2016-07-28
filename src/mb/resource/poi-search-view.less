@@ -1,16 +1,64 @@
 .mb-search-view
 {
     position: absolute;
-    top: 35px;
-    left: 80px;
-    height: 60px;
+    z-index: 2201;
+    background: white;
+    top: 20px;
+    left: 50px;
+    height: 40px;
+    width: 310px;
+    box-shadow: 1px 2px 1px rgba(0,0,0,.1);
+    border-radius: 2px;
 
     input[type=search]
     {
-        width: @mb-search-input-width;
-        height: @mb-search-input-height;
-        border: 1px solid #ccc;
-        border-radius: 8px;
+        position: absolute;
+        top: 4px;
+        left: 0px;
+        width: 270px;
+        height: 32px;
+        border: none;
+        line-height: 20px;
+        text-indent: 8px;
+        letter-spacing: 2px;
+    }
+
+    .icon {
+        position: absolute;
+        color: grey;
+        right: 12px;
+        top: 12px;
+        z-index: 2202;
+        box-sizing: border-box;
+        width: 16px;
+        height: 16px;
+    }
+
+    .mb-suggestion-list-view
+    {
+        position: absolute;
+        background: @body-bg;
+        top: 45px;
+        left: 0;
+        right: 0;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
+
+        li
+        {
+            line-height: 1;
+            height: 30;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            text-overflow: ellipsis;
+
+            &:hover
+            {
+                background: #efefef;
+            }
+        }
     }
 
 }
