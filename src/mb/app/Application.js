@@ -1,6 +1,7 @@
 import AdaptiveApplication from "sap/a/app/Application";
 
 import MapView from "../map/MapView";
+import PoiSearchViewController from "../view/PoiSearchViewController";
 
 export default class Application extends AdaptiveApplication
 {
@@ -8,14 +9,6 @@ export default class Application extends AdaptiveApplication
     {
         super.afterInit();
         this.addStyleClass("mb-app");
-        this._initMapView();
     }
 
-    _initMapView()
-    {
-        this.mapView = new MapView("map-view", {
-            
-        });
-        this.addSubview(this.mapView);
-    }
 }
