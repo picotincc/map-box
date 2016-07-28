@@ -15,7 +15,7 @@ export default class ApplicationController extends AdaptiveApplicationController
     init()
     {
         super.init();
-        this._initModel();
+
     }
 
     createView(options)
@@ -31,7 +31,8 @@ export default class ApplicationController extends AdaptiveApplicationController
     afterInit()
     {
         super.afterInit();
-        this._initController();
+        this._initControllers();
+        this._initModel();
     }
 
     run()
@@ -41,7 +42,6 @@ export default class ApplicationController extends AdaptiveApplicationController
 
             //gaode service started
             console.log("init gaode service ready");
-            // console.log(ServiceClient.getInstance().driving);
 
             //search route between two locations
             // this.mapViewController.searchRoute([ 31.9790247, 118.7548084 ], [ 32.04389, 118.77881 ]);
@@ -49,7 +49,7 @@ export default class ApplicationController extends AdaptiveApplicationController
         });
     }
 
-    _initController()
+    _initControllers()
     {
         this._initMapViewController();
         this._initPoiSearchViewController();
@@ -73,22 +73,7 @@ export default class ApplicationController extends AdaptiveApplicationController
         const model = new Model();
         sap.ui.getCore().setModel(model);
 
-        sap.ui.getCore().getModel().bindProperty("/selectedPoi").attachChange(this._model_selectedPoi_changed.bind(this));
-        sap.ui.getCore().getModel().bindProperty("/queryPoi").attachChange(this._model_queryPoi_changed.bind(this));
-
+        this.setModel(model);
     }
-
-    _model_selectedPoi_changed(e)
-    {
-        const selectedPoi = sap.ui.getCore().getModel().getProperty("/selectedPoi");
-        this.mapViewController.setSelectedPoiMarker(selectedPoi);
-    }
-
-    _model_queryPoi_changed(e)
-    {
-        const queryPoi = sap.ui.getCore().getModel().getProperty("/queryPoi");
-        this.poiSearchViewController.setKeyword(queryPoi.formattedAddress);
-    }
-
 
 }

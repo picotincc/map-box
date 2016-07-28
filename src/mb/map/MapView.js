@@ -1,28 +1,28 @@
 import AdaptiveMapView from "sap/a/map/MapView";
 import TileLayer from "sap/a/map/layer/TileLayer";
 
+
 import ServiceClient from "gd/service/ServiceClient";
 
 import NaviLayer from "./layer/NaviLayer";
+import SelectedPoiLayer from "./layer/SelectedPoiLayer";
 
 export default class MapView extends AdaptiveMapView
 {
     metadata = {
+        properties: {
+            selectedPoi: { type: "object", bindable: true }
+        },
         events: {
-            mapclick: { location: { type: "any" } }
+            mapClick: { parameters: { location: "object" } }
         }
     };
-
-    init()
-    {
-        super.init();
-    }
 
     afterInit()
     {
         super.afterInit();
         this.addStyleClass("mb-map-view");
-        this.map.on("click",this._map_click.bind(this));
+        this.map.on("click", this._map_click.bind(this));
     }
 
     initLayers()
@@ -38,54 +38,24 @@ export default class MapView extends AdaptiveMapView
         // });
         // this.addLayer(this.naviLayer);
         // this.naviLayer.fitBounds();
+
+        this.selectedPoiLayer = new SelectedPoiLayer();
+        this.addLayer(this.selectedPoiLayer);
     }
 
-    updateNaviLocation(startLocation, endLocation)
+    setSelectedPoi(poi)
     {
-        this.naviLayer.applySettings({
-            startLocation,
-            endLocation
-        });
-        this.naviLayer.fitBounds();
-    }
-
-    drawNaviRoute(steps)
-    {
-        this.naviLayer.drawRoute(steps);
-        this.naviLayer.fitBounds();
-    }
-
-    searchPoi(keyword)
-    {
-        ServiceClient.getInstance().searchPoiAutocomplete(keyword).then((result) => {
-            console.log(result);
-        });
-    }
-
-    updateSelectedMaker(selectedPoi)
-    {
-        console.log(selectedPoi);
-        const latlng = L.latLng(selectedPoi.location.lat, selectedPoi.location.lng);
-        if (!this.selectedMarker)
+        this.setProperty("selectedPoi", poi);
+        if (poi)
         {
-            this.selectedMarker = L.circleMarker(latlng);
-            this.selectedMarker.setRadius(8);
-            this.selectedMarker.setStyle({
-                color: "blue",
-                opacity: 0.8,
-                fillColor: "blue",
-                fillOpacity: 0.8
-            });
-            this.map.addLayer(this.selectedMarker);
-        }
-        else {
-            this.selectedMarker.setLatLng(latlng);
+            this.selectedPoiLayer.updateSelectedMaker(poi);
+            this.setCenterLocation(poi.location);
         }
     }
 
     _map_click(e)
     {
-        this.fireMapclick({
+        this.fireMapClick({
             location: e.latlng
         });
     }

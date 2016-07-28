@@ -4,11 +4,11 @@ export default class PoiSearchView extends View
 {
     metadata = {
         properties: {
-            poi: { type: "object" }
+            poi: { type: "object", bindable: true }
         },
         events: {
-            input: { keyword: { type: "string" } },
-            keydown: { keyword: { type: "string" } }
+            input: { parameters: {keyword: { type: "string" } } },
+            search: { parameters: {keyword: { type: "string" } } }
         }
     };
 
@@ -23,8 +23,8 @@ export default class PoiSearchView extends View
 
         this.inputDelay = null;
 
-        this.$input.on("input",this._on_input.bind(this));
-        this.$element.on("keydown", this._onkeydown.bind(this));
+        this.$input.on("input",this._oninput.bind(this));
+        this.$element.on("keydown", this._keydown.bind(this));
     }
 
     afterInit()
@@ -46,13 +46,17 @@ export default class PoiSearchView extends View
     _updatePoi()
     {
         const poi = this.getPoi();
-        if (poi.name)
+        if (poi && poi.name)
         {
             this.$input.val(poi.name);
         }
+        else
+        {
+            this.$input.val("");
+        }
     }
 
-    _on_input(e)
+    _oninput(e)
     {
         if (this.inputDelay)
         {
@@ -66,13 +70,13 @@ export default class PoiSearchView extends View
         }, 500);
     }
 
-    _onkeydown(e)
+    _keydown(e)
     {
         if (e.keyCode === 13)
         {
             const keyword = this.$input.val();
             if (keyword) {
-                this.fireKeydown({
+                this.fireSearch({
                     keyword: keyword
                 });
             }

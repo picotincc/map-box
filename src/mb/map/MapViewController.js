@@ -13,13 +13,16 @@ export default class MapViewController extends ViewController
 
     createView(options)
     {
-        return new MapView(options);
+        const opts = $.extend({
+            selectedPoi: "{/selectedPoi}"
+        }, options);
+        return new MapView(opts);
     }
 
     initView()
     {
         super.initView();
-        this.view.attachMapclick(this._map_click.bind(this));
+        this.view.attachMapClick(this._map_click.bind(this));
     }
 
     searchRoute(startLocation, endLocation)
@@ -31,12 +34,6 @@ export default class MapViewController extends ViewController
         }, reject => {
             console.log(reject);
         });
-    }
-
-    setSelectedPoiMarker(selectedPoi)
-    {
-        this.view.setCenterLocation(selectedPoi.location, 12);
-        this.view.updateSelectedMaker(selectedPoi);
     }
 
     _map_click(e)

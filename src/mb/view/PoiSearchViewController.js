@@ -13,44 +13,38 @@ export default class PoiSearchViewController extends ViewController
 
     createView(options)
     {
-        return new PoiSearchView("search-view", options);
+        const opts = $.extend({
+            poi: "{/selectedPoi}"
+        }, options);
+        return new PoiSearchView("search-view", opts);
     }
 
     initView()
     {
         super.initView();
         this.view.attachInput(this._oninput.bind(this));
-        this.view.attachKeydown(this._keydown.bind(this));
-    }
-
-    setKeyword(keyword)
-    {
-        this.view.setKeyword(keyword);
+        this.view.attachSearch(this._onSearch.bind(this));
     }
 
     _oninput(e)
     {
         ServiceClient.getInstance().searchPoiAutocomplete(e.getParameters().keyword).then(result => {
-            console.log(result);
-        }, (reject) => {
-            console.log(reject);
+            //console.log(result);
+        }, (reason) => {
+            console.error(reason);
         });
     }
 
-    _keydown(e)
+    _onSearch(e)
     {
         ServiceClient.getInstance().searchPoiAutocomplete(e.getParameters().keyword).then(result => {
             if (result.length > 0) {
-                console.log(result);
                 const poi = result[0];
-                this.view.setPoi(poi);
-
                 //改变全局model
                 sap.ui.getCore().getModel().setProperty("/selectedPoi", poi);
-
             }
-        }, (reject) => {
-            console.log(reject);
+        }, (reason) => {
+            console.error(reason);
         });
     }
 }

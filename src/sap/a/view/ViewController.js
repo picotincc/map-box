@@ -68,7 +68,7 @@ export default class ViewController extends ManagedObject
         const result = this.removeAggregation("childViewControllers", viewController);
         if (result) {
             this.view.removeSubview(viewController.view, neverUseAgain);
-        
+
         }
         return result;
     }
@@ -86,6 +86,15 @@ export default class ViewController extends ManagedObject
         if (this.getParent())
         {
             this.getParent().removeChildViewController(this);
+        }
+    }
+
+    setModel(model, name)
+    {
+        super.setModel(model);
+        if (this.view)
+        {
+            this.view.setModel(model);
         }
     }
 
