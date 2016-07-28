@@ -31,8 +31,8 @@ export default class MapViewController extends ViewController
 
         ServiceClient.getInstance().searchDrivingRoute([ startLocation, endLocation ]).then((result) => {
             this.view.drawNaviRoute(result.steps);
-        }, reject => {
-            console.log(reject);
+        }, reason => {
+            console.error(reason);
         });
     }
 
