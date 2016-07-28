@@ -23,6 +23,11 @@ export default class PoiSearchViewController extends ViewController
         this.view.attachKeydown(this._keydown.bind(this));
     }
 
+    setKeyword(keyword)
+    {
+        this.view.setKeyword(keyword);
+    }
+
     _oninput(e)
     {
         ServiceClient.getInstance().searchPoiAutocomplete(e.getParameters().keyword).then(result => {

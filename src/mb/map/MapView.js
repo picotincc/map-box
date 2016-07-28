@@ -38,23 +38,21 @@ export default class MapView extends AdaptiveMapView
         // });
         // this.addLayer(this.naviLayer);
         // this.naviLayer.fitBounds();
-
-
-
     }
 
-    searchRoute(startLocation, endLocation)
+    updateNaviLocation(startLocation, endLocation)
     {
         this.naviLayer.applySettings({
             startLocation,
             endLocation
         });
         this.naviLayer.fitBounds();
+    }
 
-        ServiceClient.getInstance().searchDrivingRoute([ startLocation, endLocation ]).then((result) => {
-            this.naviLayer.drawRoute(result.steps);
-            this.naviLayer.fitBounds();
-        });
+    drawNaviRoute(steps)
+    {
+        this.naviLayer.drawRoute(steps);
+        this.naviLayer.fitBounds();
     }
 
     searchPoi(keyword)
@@ -67,7 +65,7 @@ export default class MapView extends AdaptiveMapView
     updateSelectedMaker(selectedPoi)
     {
         console.log(selectedPoi);
-        var latlng = L.latLng(selectedPoi.location.lat, selectedPoi.location.lng);
+        const latlng = L.latLng(selectedPoi.location.lat, selectedPoi.location.lng);
         if (!this.selectedMarker)
         {
             this.selectedMarker = L.circleMarker(latlng);
