@@ -1,0 +1,93 @@
+.mb-od-search-view
+{
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    width: 360px;
+    padding: 16px 8px;
+    background: white;
+    box-shadow: 1px 2px 1px 2px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+
+    > .search-section
+    {
+        flex: 3 0 90px;
+        display: flex;
+
+        > .icon-wrapper
+        {
+            flex: 1 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            > .icon
+            {
+                cursor: pointer;
+            }
+        }
+
+        > .search-views
+        {
+            flex: 4 0 auto;
+            display: flex;
+            flex-direction: column;
+
+            .mb-search-view
+            {
+                flex: 1 0 45px;
+                margin-left: 12px;
+                padding-top: 4px;
+                padding-bottom: 4px;
+            }
+
+            #origin-search-view
+            {
+                z-index: 1;
+
+                > input[type=search]
+                {
+                    &::before
+                    {
+                        content: "起：";
+                    }
+                }
+            }
+
+            #dest-search-view
+            {
+                z-index: 1;
+
+                > input[type=search]
+                {
+                    &::before
+                    {
+                        content: "终：";
+                    }
+                }
+            }
+        }
+    }
+
+    > .query-section
+    {
+        flex: 1 0 30px;
+        margin: 10px;
+        display: flex;
+        flex-direction: row-reverse;
+
+        > .search-button
+        {
+            line-height: 30px;
+            align-content: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 4px;
+            padding-left: 8px;
+            padding-right: 8px;
+            color: white;
+            background: #0767b8;
+        }
+    }
+}

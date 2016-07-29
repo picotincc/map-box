@@ -5,7 +5,7 @@ import ServiceClient from "gd/service/ServiceClient";
 import Application from "./Application";
 import MapViewController from "../map/MapViewController";
 import Model from "../model/Model";
-import PoiSearchViewController from "../view/PoiSearchViewController";
+import ODSearchViewController from "../view/ODSearchViewController";
 
 
 
@@ -52,7 +52,7 @@ export default class ApplicationController extends AdaptiveApplicationController
     _initControllers()
     {
         this._initMapViewController();
-        this._initPoiSearchViewController();
+        this._initODSearchViewController();
     }
 
     _initMapViewController()
@@ -61,10 +61,10 @@ export default class ApplicationController extends AdaptiveApplicationController
         this.addChildViewController(this.mapViewController);
     }
 
-    _initPoiSearchViewController()
+    _initODSearchViewController()
     {
-        this.poiSearchViewController = new PoiSearchViewController("poi-search-view");
-        this.addChildViewController(this.poiSearchViewController);
+        this.odSearchViewController = new ODSearchViewController("od-search-view");
+        this.addChildViewController(this.odSearchViewController);
     }
 
 

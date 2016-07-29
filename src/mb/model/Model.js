@@ -6,7 +6,8 @@ export default class Model extends JSONModel
     {
         super({
             selectedPoi: null,
-            queryPoi: null
+            originPoi: null,
+            destPoi: null
         });
         this.init();
     }

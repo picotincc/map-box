@@ -6,6 +6,12 @@ import PoiSearchView from "./PoiSearchView";
 
 export default class PoiSearchViewController extends ViewController
 {
+    metadata = {
+        events: {
+            select: { parameters: { selectedPoi: "object" } }
+        }
+    };
+
     afterInit()
     {
         super.afterInit();
@@ -14,9 +20,9 @@ export default class PoiSearchViewController extends ViewController
     createView(options)
     {
         const opts = $.extend({
-            poi: "{/selectedPoi}"
+
         }, options);
-        return new PoiSearchView("search-view", opts);
+        return new PoiSearchView(opts);
     }
 
     initView()
@@ -64,7 +70,10 @@ export default class PoiSearchViewController extends ViewController
 
     _suggestionListView_click(e)
     {
-        const poi = e.getParameters().selectedPoi;
-        this.getModel().forceSetProperty("/selectedPoi", poi);
+        const selectedPoi = e.getParameters().selectedPoi;
+        this.getModel().forceSetProperty("/selectedPoi", selectedPoi);
+        this.fireSelect({
+            selectedPoi
+        });
     }
 }

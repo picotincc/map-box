@@ -6,7 +6,8 @@ export default class PoiSearchView extends View
 {
     metadata = {
         properties: {
-            poi: { type: "object", bindable: true }
+            poi: { type: "object", bindable: true },
+            placeholder: { type: "string", defaultValue: "搜索" }
         },
         events: {
             input: { parameters: {keyword: { type: "string" } } },
@@ -16,14 +17,12 @@ export default class PoiSearchView extends View
         }
     };
 
-    init()
+    afterInit()
     {
-        super.init();
+        super.afterInit();
         this.addStyleClass("mb-search-view");
 
-        
-
-        this.$input = $(`<input type=search placeholder="搜索">`);
+        this.$input = $(`<input type=search placeholder=${this.getPlaceholder()}>`);
         this.$element.append(this.$input);
 
         this.$element.append(`<span class="icon iconfont icon-search"/>`);

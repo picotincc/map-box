@@ -11,8 +11,10 @@ export default class MapView extends AdaptiveMapView
 {
     metadata = {
         properties: {
-            selectedPoi: { type: "object", bindable: true }
-            
+            selectedPoi: { type: "object", bindable: true },
+            originPoi: { type: "object", bindable: true },
+            destPoi: { type: "object", bindable: true }
+
         },
         events: {
             mapClick: { parameters: { location: "object" } }
@@ -33,23 +35,39 @@ export default class MapView extends AdaptiveMapView
         });
         this.addLayer(this.tileLayer);
 
-        // this.naviLayer = new NaviLayer({
-        //     startLocation: [ 31.9790247, 118.7548084 ],
-        //     endLocation: [ 32.04389, 118.77881 ]
-        // });
-        // this.addLayer(this.naviLayer);
-        // this.naviLayer.fitBounds();
+        this.naviLayer = new NaviLayer({});
+        this.addLayer(this.naviLayer);
 
         this.selectedPoiLayer = new SelectedPoiLayer();
         this.addLayer(this.selectedPoiLayer);
     }
 
-    setSelectedPoi(poi)
+    // setSelectedPoi(poi)
+    // {
+    //     this.setProperty("selectedPoi", poi);
+    //     if (poi)
+    //     {
+    //         this.selectedPoiLayer.updateSelectedMaker(poi);
+    //         this.setCenterLocation(poi.location);
+    //     }
+    // }
+
+    setOriginPoi(poi)
     {
-        this.setProperty("selectedPoi", poi);
+        this.setProperty("originPoi", poi);
         if (poi)
         {
-            this.selectedPoiLayer.updateSelectedMaker(poi);
+            this.naviLayer.setStartLocation(poi.location);
+            this.setCenterLocation(poi.location);
+        }
+    }
+
+    setDestPoi(poi)
+    {
+        this.setProperty("destPoi", poi);
+        if (poi)
+        {
+            this.naviLayer.setEndLocation(poi.location);
             this.setCenterLocation(poi.location);
         }
     }
