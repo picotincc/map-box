@@ -78,6 +78,11 @@ export default class MapView extends AdaptiveMapView
         this.naviLayer.fitBounds();
     }
 
+    clearRoute()
+    {
+        this.naviLayer.clearRoute();
+    }
+
     _map_click(e)
     {
         this.fireMapClick({

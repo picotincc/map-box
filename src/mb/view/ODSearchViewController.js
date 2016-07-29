@@ -58,12 +58,15 @@ export default class ODSearchViewController extends ViewController
 
     _originSearchView_selected(e)
     {
+        this.view.setIsDrawRoute(false);
         const poi = e.getParameters().selectedPoi;
         this.getModel().forceSetProperty("/originPoi", poi);
+
     }
 
     _destSearchView_selected(e)
     {
+        this.view.setIsDrawRoute(false);
         const poi = e.getParameters().selectedPoi;
         this.getModel().forceSetProperty("/destPoi", poi);
     }
@@ -76,6 +79,12 @@ export default class ODSearchViewController extends ViewController
 
         model.setProperty("/originPoi", destPoi);
         model.setProperty("/destPoi", originPoi);
+
+        if (this.view.getIsDrawRoute())
+        {
+            this.view.fireSearch();
+        }
+
     }
 
 

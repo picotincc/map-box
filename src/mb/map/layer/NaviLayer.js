@@ -37,12 +37,17 @@ export default class NaviLayer extends Layer
 
     drawRoute(steps)
     {
-        this.routeGroup.clearLayers();
+        this.clearRoute();
         const paths = steps.map(step => {
             return step.path;
         });
         const mPolyline = L.multiPolyline(paths);
         this.routeGroup.addLayer(mPolyline);
+    }
+
+    clearRoute()
+    {
+        this.routeGroup.clearLayers();
     }
 
     _updateStartMarker()

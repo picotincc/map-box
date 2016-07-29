@@ -66,6 +66,7 @@ export default class ApplicationController extends AdaptiveApplicationController
         this.odSearchViewController = new ODSearchViewController("od-search-view");
         this.addChildViewController(this.odSearchViewController);
         this.odSearchViewController.view.attachSearch(this._odSearchView_search.bind(this));
+        this.odSearchViewController.view.attachClearRoute(this._odSearchView_clearRoute.bind(this));
     }
 
 
@@ -83,6 +84,11 @@ export default class ApplicationController extends AdaptiveApplicationController
         const originLoc = model.getProperty("/originPoi").location;
         const destLoc = model.getProperty("/destPoi").location;
         this.mapViewController.searchRoute([ originLoc.lat, originLoc.lng ], [ destLoc.lat, destLoc.lng ]);
+    }
+
+    _odSearchView_clearRoute(e)
+    {
+        this.mapViewController.view.clearRoute();
     }
 
 }
