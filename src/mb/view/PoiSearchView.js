@@ -21,6 +21,8 @@ export default class PoiSearchView extends View
         super.init();
         this.addStyleClass("mb-search-view");
 
+        
+
         this.$input = $(`<input type=search placeholder="搜索">`);
         this.$element.append(this.$input);
 
