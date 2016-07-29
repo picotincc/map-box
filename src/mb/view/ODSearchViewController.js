@@ -66,4 +66,6 @@ export default class ODSearchViewController extends ViewController
         const poi = e.getParameters().selectedPoi;
         this.getModel().forceSetProperty("/destPoi", poi);
     }
+
+
 }

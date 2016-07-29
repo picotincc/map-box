@@ -72,6 +72,12 @@ export default class MapView extends AdaptiveMapView
         }
     }
 
+    drawNaviRoute(steps)
+    {
+        this.naviLayer.drawRoute(steps);
+        this.naviLayer.fitBounds();
+    }
+
     _map_click(e)
     {
         this.fireMapClick({

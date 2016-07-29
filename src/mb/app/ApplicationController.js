@@ -65,6 +65,7 @@ export default class ApplicationController extends AdaptiveApplicationController
     {
         this.odSearchViewController = new ODSearchViewController("od-search-view");
         this.addChildViewController(this.odSearchViewController);
+        this.odSearchViewController.view.attachSearch(this._odSearchView_search.bind(this));
     }
 
 
@@ -74,6 +75,14 @@ export default class ApplicationController extends AdaptiveApplicationController
         sap.ui.getCore().setModel(model);
 
         this.setModel(model);
+    }
+
+    _odSearchView_search(e)
+    {
+        const model = this.getModel();
+        const originLoc = model.getProperty("/originPoi").location;
+        const destLoc = model.getProperty("/destPoi").location;
+        this.mapViewController.searchRoute([ originLoc.lat, originLoc.lng ], [ destLoc.lat, destLoc.lng ]);
     }
 
 }
