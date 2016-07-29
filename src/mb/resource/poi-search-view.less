@@ -1,11 +1,7 @@
 .mb-search-view
 {
-    position: absolute;
-    z-index: 2201;
+    position: relative;
     background: white;
-    top: 20px;
-    left: 50px;
-    height: 40px;
     width: 310px;
     box-shadow: 1px 2px 1px rgba(0,0,0,.1);
     border-radius: 2px;
@@ -28,7 +24,7 @@
         color: grey;
         right: 12px;
         top: 12px;
-        z-index: 2202;
+        z-index: 2;
         box-sizing: border-box;
         width: 16px;
         height: 16px;
@@ -36,7 +32,8 @@
 
     .mb-suggestion-list-view
     {
-        position: absolute;
+        z-index: 999;
+        position: relative;
         background: @body-bg;
         top: 45px;
         left: 0;
