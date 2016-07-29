@@ -4,7 +4,8 @@ export default class ODSearchView extends View
 {
     metadata = {
         events: {
-            search: {  }
+            search: {},
+            switch: {}
         }
     };
     afterInit()
@@ -23,6 +24,9 @@ export default class ODSearchView extends View
                 </div>
             </div>
         `);
+        $searchSection.on("click", "span", () => {
+            this.fireSwitch();
+        });
         const $searchViews = $(`
             <div class="search-views">
             </div>

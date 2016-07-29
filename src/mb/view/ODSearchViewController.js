@@ -21,6 +21,7 @@ export default class ODSearchViewController extends ViewController
     initView()
     {
         super.initView();
+        this.view.attachSwitch(this._poi_swtich.bind(this));
     }
 
     _initControllers()
@@ -65,6 +66,16 @@ export default class ODSearchViewController extends ViewController
     {
         const poi = e.getParameters().selectedPoi;
         this.getModel().forceSetProperty("/destPoi", poi);
+    }
+
+    _poi_swtich(e)
+    {
+        const model = this.getModel();
+        const originPoi = model.getProperty("/originPoi");
+        const destPoi = model.getProperty("/destPoi");
+
+        model.setProperty("/originPoi", destPoi);
+        model.setProperty("/destPoi", originPoi);
     }
 
 
