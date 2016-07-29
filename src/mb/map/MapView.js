@@ -12,6 +12,7 @@ export default class MapView extends AdaptiveMapView
     metadata = {
         properties: {
             selectedPoi: { type: "object", bindable: true }
+            
         },
         events: {
             mapClick: { parameters: { location: "object" } }

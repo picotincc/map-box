@@ -34,7 +34,7 @@ export default class ServiceClient extends ManagedObject
                 city: "南京市"
             };
             this.driving = new AMap.Driving(options);
-            this.autocomplete = new AMap.Autocomplete(options);
+            this.autocomplete = new AMap.Autocomplete(Object.assign({}, options));
             this.geocoder = new AMap.Geocoder(options);
             setTimeout(() => {
                 this.fireReady();

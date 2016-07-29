@@ -13,7 +13,14 @@ export default class Model extends JSONModel
 
     init()
     {
-        
+
+    }
+
+    forceSetProperty(sPath, oValue, oContent, bAsyncUpdate)
+    {
+        const result = this.setProperty(sPath, oValue, oContent, bAsyncUpdate);
+        this.checkUpdate(true, false);
+        return result;
     }
 
 

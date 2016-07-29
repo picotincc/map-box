@@ -26,6 +26,7 @@ export default class PoiSearchViewController extends ViewController
         this.view.attachSearch(this._onSearch.bind(this));
         this.view.attachFocus(this._onfocus.bind(this));
         this.view.attachBlur(this._onblur.bind(this));
+        this.view.suggestionListView.attachSelectedPoiChanged(this._suggestionListView_click.bind(this));
     }
 
     _oninput(e)
@@ -44,7 +45,7 @@ export default class PoiSearchViewController extends ViewController
             if (result.length > 0) {
                 const poi = result[0];
                 //改变全局model
-                sap.ui.getCore().getModel().setProperty("/selectedPoi", poi);
+                this.getModel().setProperty("/selectedPoi", poi);
             }
         }, (reason) => {
             console.error(reason);
@@ -59,5 +60,11 @@ export default class PoiSearchViewController extends ViewController
     _onblur(e)
     {
         this.view.suggestionListView.hideSuggestion();
+    }
+
+    _suggestionListView_click(e)
+    {
+        const poi = e.getParameters().selectedPoi;
+        this.getModel().forceSetProperty("/selectedPoi", poi);
     }
 }

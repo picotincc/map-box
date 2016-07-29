@@ -40,7 +40,7 @@ export default class MapViewController extends ViewController
     {
         ServiceClient.getInstance().searchAddress(e.getParameters().location).then(result => {
             //改变全局model
-            sap.ui.getCore().getModel().setProperty("/queryPoi", result);
+            this.getModel().setProperty("/queryPoi", result);
         });
     }
 
